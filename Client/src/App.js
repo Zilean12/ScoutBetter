@@ -294,15 +294,20 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Resume Analysis with Scoring</h1>
-        <PromptInput prompt={prompt} onChange={setPrompt} />
-        <RoleInput role={role} onChange={setRole} />
-        <button onClick={handleSubmit}>Submit</button>
-        <ResponseDisplay response={response} />
-        <PDFTextExtractor onTextExtract={handleTextExtraction} />
-      </header>
-    </div>
+    <header className="App-header">
+      <h1>Resume Analysis with Scoring</h1>
+      <p>
+        Upload your resume and specify the role to analyze your resume for relevance, key sections, and formatting. 
+        Scores are based on a scale of 0–100.
+      </p>
+      <PromptInput prompt={prompt} onChange={setPrompt} />
+      <RoleInput role={role} onChange={setRole} />
+      <button onClick={handleSubmit}>Submit</button>
+      <ResponseDisplay response={response} />
+      <PDFTextExtractor onTextExtract={handleTextExtraction} />
+    </header>
+  </div>
+  
   );
 }
 
