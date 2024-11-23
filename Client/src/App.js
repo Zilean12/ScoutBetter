@@ -379,7 +379,174 @@
 
 // export default App;
 
-  import React, { useState } from "react";
+//   import React, { useState } from "react";
+// import PromptInput from "./components/PromptInput";
+// import RoleInput from "./components/RoleInput";
+// import ResponseDisplay from "./components/ResponseDisplay";
+// import PDFTextExtractor from "./components/PDFTextExtractor";
+// import { analyzeResume } from "./api/analyzeApi";
+// import { generatePDFReport } from "./utils/reportGenerator";
+
+// // import { getUsernameContact } from "../../server/services/groqService";
+
+// function App() {
+//   const [prompt, setPrompt] = useState("");
+//   const [role, setRole] = useState("");
+
+//   // const [candidateName, setCandidateName] = useState("");
+//   const [response, setResponse] = useState({});
+//   const [username, setUsername] = useState("");
+//   const [contactNo, setContactNo] = useState("");
+
+
+//   const handleTextExtraction = (extractedText, name, contactNumber) => {
+//     setPrompt(extractedText);
+//     setUsername(name);
+//     setContactNo(contactNumber);
+//   };
+
+//   const handleSubmit = async () => {
+//     if (!prompt.trim() || !role.trim()) {
+//       setResponse({ analysis: "Prompt and role cannot be empty!", score: 0 });
+//       return;
+//     }
+
+//     try {
+//       const apiResponse = await analyzeResume(prompt, role, username, contactNo);
+//       setResponse(apiResponse);
+//     } catch (error) {
+//       setResponse({ analysis: "Error occurred while analyzing resume.", score: 0 });
+//     }
+//   };
+
+//   // const handleDownloadReport = () => {
+//   //       if (response.analysis) {
+//   //         generatePDFReport(prompt, role, response);
+//   //       } else {
+//   //         alert("No analysis to download. Please submit the resume for analysis first.");
+//   //       }
+//   //     };
+
+//   const handleDownloadReport = () => {
+//     if (response.analysis) {
+//       generatePDFReport(prompt, role, response, username, contactNo);
+//     } else {
+//       alert("No analysis to download. Please submit the resume for analysis first.");
+//     }
+//   };
+  
+//   return (
+//     <div className="App">
+//       <header className="App-header">
+//         <h1>Resume Analysis with Scoring</h1>
+
+//         <p><strong>Username:</strong> {username || "Not extracted yet"}</p>
+//         <p><strong>Contact Number:</strong> {contactNo || "Not extracted yet"}</p>
+
+//         <PromptInput prompt={prompt} onChange={setPrompt} />
+//         <RoleInput role={role} onChange={setRole} />
+//         <button onClick={handleSubmit}>Submit</button>
+//         <ResponseDisplay response={response} candidateName={username} />
+//         <PDFTextExtractor onTextExtract={handleTextExtraction} />
+//         <button onClick={handleDownloadReport}>Download Report</button>
+//       </header>
+//     </div>
+//   );
+// }
+// export default App;
+
+// import React, { useState } from "react";
+// import PromptInput from "./components/PromptInput";
+// import RoleInput from "./components/RoleInput";
+// import ResponseDisplay from "./components/ResponseDisplay";
+// import PDFTextExtractor from "./components/PDFTextExtractor";
+// import { analyzeResume } from "./api/analyzeApi";
+// import { generatePDFReport } from "./utils/reportGenerator";
+
+// function App() {
+//   const [prompt, setPrompt] = useState("");
+//   const [role, setRole] = useState("");
+//   const [response, setResponse] = useState({});
+//   const [username, setUsername] = useState("");
+//   const [contactNo, setContactNo] = useState("");
+
+//   const handleTextExtraction = (extractedText, name, contactNumber) => {
+//     setPrompt(extractedText);
+//     // setUsername(name);
+//     // setContactNo(contactNumber);
+//   };
+
+//   const handleSubmit = async () => {
+//     if (!prompt.trim() || !role.trim()) {
+//       setResponse({ analysis: "Prompt and role cannot be empty!", score: 0 });
+//       return;
+//     }
+
+//     try {
+//       const apiResponse = await analyzeResume(prompt, role, username, contactNo);
+//       setResponse(apiResponse);
+//     } catch (error) {
+//       setResponse({ analysis: "Error occurred while analyzing resume.", score: 0 });
+//     }
+//   };
+
+//   const handleDownloadReport = () => {
+//     if (response.analysis) {
+//       generatePDFReport(prompt, role, response, username, contactNo);
+//     } else {
+//       alert("No analysis to download. Please submit the resume for analysis first.");
+//     }
+//   };
+
+//   return (
+//     <div className="App bg-gradient-to-r from-indigo-50 to-blue-100 min-h-screen flex items-center justify-center">
+//       <div className="container mx-auto p-12 bg-white shadow-xl rounded-xl max-w-4xl">
+//         <header className="App-header text-center mb-8">
+//           <h1 className="text-4xl font-bold text-indigo-700 mb-8">
+//             Resume Analysis with Scoring
+//           </h1>
+
+//           {/* <div className="mb-6 space-y-4">
+//             <p className="text-lg text-gray-700"><strong>Username:</strong> {username || "Not extracted yet"}</p>
+//             <p className="text-lg text-gray-700"><strong>Contact Number:</strong> {contactNo || "Not extracted yet"}</p>
+//           </div> */}
+
+//           <div className="mb-8 space-y-6">
+//             <PromptInput prompt={prompt} onChange={setPrompt} />
+//             <RoleInput role={role} onChange={setRole} />
+//           </div>
+
+//           <div className="space-x-6">
+//             <button
+//               onClick={handleSubmit}
+//               className="px-8 py-4 bg-indigo-600 text-white font-semibold rounded-xl shadow-xl transform transition-all hover:scale-110 hover:bg-indigo-700"
+//             >
+//               Submit
+//             </button>
+
+//             <button
+//               onClick={handleDownloadReport}
+//               className="px-8 py-4 bg-green-600 text-white font-semibold rounded-xl shadow-xl transform transition-all hover:scale-110 hover:bg-green-700"
+//             >
+//               Download Report
+//             </button>
+//           </div>
+//         </header>
+
+//         <div className="mt-10">
+//           <ResponseDisplay response={response} candidateName={username} />
+//         </div>
+
+//         <div className="mt-12">
+//           <PDFTextExtractor onTextExtract={handleTextExtraction} />
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default App;
+import React, { useState } from "react";
 import PromptInput from "./components/PromptInput";
 import RoleInput from "./components/RoleInput";
 import ResponseDisplay from "./components/ResponseDisplay";
@@ -387,22 +554,16 @@ import PDFTextExtractor from "./components/PDFTextExtractor";
 import { analyzeResume } from "./api/analyzeApi";
 import { generatePDFReport } from "./utils/reportGenerator";
 
-// import { getUsernameContact } from "../../server/services/groqService";
-
 function App() {
-  const [prompt, setPrompt] = useState("");
+  const [prompt, setPrompt] = useState(""); // Full prompt to be sent to API
   const [role, setRole] = useState("");
-
-  // const [candidateName, setCandidateName] = useState("");
   const [response, setResponse] = useState({});
   const [username, setUsername] = useState("");
   const [contactNo, setContactNo] = useState("");
 
-
-  const handleTextExtraction = (extractedText, name, contactNumber) => {
-    setPrompt(extractedText);
-    setUsername(name);
-    setContactNo(contactNumber);
+  const handleTextExtraction = (extractedText) => {
+    // Append the new extracted text to the existing text
+    setPrompt((prevPrompt) => prevPrompt + "\n" + extractedText);
   };
 
   const handleSubmit = async () => {
@@ -410,22 +571,15 @@ function App() {
       setResponse({ analysis: "Prompt and role cannot be empty!", score: 0 });
       return;
     }
-
+  
     try {
       const apiResponse = await analyzeResume(prompt, role, username, contactNo);
-      setResponse(apiResponse);
+      setResponse(apiResponse);  // Make sure this is updating the response correctly
     } catch (error) {
       setResponse({ analysis: "Error occurred while analyzing resume.", score: 0 });
     }
   };
-
-  // const handleDownloadReport = () => {
-  //       if (response.analysis) {
-  //         generatePDFReport(prompt, role, response);
-  //       } else {
-  //         alert("No analysis to download. Please submit the resume for analysis first.");
-  //       }
-  //     };
+  
 
   const handleDownloadReport = () => {
     if (response.analysis) {
@@ -434,23 +588,47 @@ function App() {
       alert("No analysis to download. Please submit the resume for analysis first.");
     }
   };
-  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Resume Analysis with Scoring</h1>
+    <div className="App bg-gradient-to-r from-indigo-50 to-blue-100 min-h-screen flex items-center justify-center">
+      <div className="container mx-auto p-12 bg-white shadow-xl rounded-xl max-w-4xl">
+        <header className="App-header text-center mb-8">
+          <h1 className="text-4xl font-bold text-indigo-700 mb-8">
+            Resume Analysis with Scoring
+          </h1>
 
-        <p><strong>Username:</strong> {username || "Not extracted yet"}</p>
-        <p><strong>Contact Number:</strong> {contactNo || "Not extracted yet"}</p>
+          <div className="mb-8 space-y-6">
+            <PromptInput prompt={prompt} onChange={setPrompt} />
+            <RoleInput role={role} onChange={setRole} />
+          </div>
 
-        <PromptInput prompt={prompt} onChange={setPrompt} />
-        <RoleInput role={role} onChange={setRole} />
-        <button onClick={handleSubmit}>Submit</button>
+          <div className="space-x-6">
+            <button
+              onClick={handleSubmit}
+              className="px-8 py-4 bg-indigo-600 text-white font-semibold rounded-xl shadow-xl transform transition-all hover:scale-110 hover:bg-indigo-700"
+            >
+              Submit
+            </button>
+
+            <button
+              onClick={handleDownloadReport}
+              className="px-8 py-4 bg-green-600 text-white font-semibold rounded-xl shadow-xl transform transition-all hover:scale-110 hover:bg-green-700"
+            >
+              Download Report
+            </button>
+          </div>
+        </header>
+
+        <div className="mt-10">
         <ResponseDisplay response={response} candidateName={username} />
-        <PDFTextExtractor onTextExtract={handleTextExtraction} />
-        <button onClick={handleDownloadReport}>Download Report</button>
-      </header>
+        </div>
+
+        <div className="mt-12">
+          <PDFTextExtractor onTextExtract={handleTextExtraction} />
+        </div>
+      </div>
     </div>
   );
 }
+
 export default App;

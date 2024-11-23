@@ -10,6 +10,7 @@
     "dotenv": "^16.4.5",
     "groq-sdk": "^0.8.0",
     "jspdf": "^2.5.2",
+    "marked": "^15.0.2",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^4.8.69",
     "react": "^18.3.1",
@@ -41,5 +42,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15"
   }
 }

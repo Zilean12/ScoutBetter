@@ -11,8 +11,12 @@
 
 // export default ResponseDisplay;
 
+
 import React from "react";
 import "./ResponseDisplay.css";
+import { marked } from 'marked';
+
+
 
 function ResponseDisplay({ response }) {
   if (!response || !response.score) {
@@ -26,11 +30,13 @@ function ResponseDisplay({ response }) {
     - **Inclusion of Key Sections (30%):** Ensures the presence of essential sections (e.g., Skills, Experience).
     - **Formatting Quality (20%):** Evaluates bullet points, spacing, and structure.
   `;
+  
+  const formattedAnalysis = marked(analysis);  // Format analysis using Markdown
 
   return (
     <div className="response-display">
       <h3>Resume Analysis</h3>
-      <p>{analysis}</p>
+      <div dangerouslySetInnerHTML={{ __html: formattedAnalysis }} />
 
       <h3>Resume Score</h3>
       <div className="progress-bar-container">
@@ -54,5 +60,6 @@ function ResponseDisplay({ response }) {
     </div>
   );
 }
+
 
 export default ResponseDisplay;

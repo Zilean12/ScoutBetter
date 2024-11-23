@@ -267,6 +267,28 @@ const SCORE_WEIGHTS = {
   sections: 30,  // Weight for key sections
   formatting: 20 // Weight for formatting quality
 };
+const requirement = `
+ and provide a detailed analysis including relevance, key sections, formatting, and an overall score (0–100). 
+
+- Start with the **Candidate Details** section, including:
+  - Name
+  - Phone Number
+  - Address
+  - Email ID
+
+- Then, move to the **Project Details** section, with individual project titles as subsections.
+
+- Follow with the **Analysis Report Section** and provide scores for the overall resume.
+
+- Use **bullet points** to highlight:
+  - Strengths
+  - Weaknesses
+
+- Conclude with an **Improvement Suggestions** section in bullet points.
+
+Ensure the response is concise and structured with clear subpoints. Avoid long paragraphs.
+`;
+
 
 // Required sections in the resume
 const REQUIRED_SECTIONS = ["Summary", "Skills", "Experience", "Education"];
@@ -285,14 +307,14 @@ exports.analyzeResume = async (prompt, role) => {
       messages: [
         {
           role: "user",
-          content: `${prompt} [End of Resume]. Now, analyze the resume content for the role of ${role} and provide a detailed analysis including relevance, key sections, formatting, and an overall score (0–100). Highlight strengths and weaknesses.`,
+          content: prompt+` [End of Resume]. Now, analyze the resume content for the role of ${role} `+requirement
         },
       ],
       model: "llama3-8b-8192",
     });
 
     const content = chatCompletion.choices[0]?.message?.content || "";
-
+    console.log(content)
     // Calculate a "Resume Score"
     const score = calculateResumeScore(prompt, role);
 
