@@ -262,20 +262,146 @@
 
 // export default App;
 
-import React, { useState } from "react";
+// import React, { useState } from "react";
+// import PromptInput from "./components/PromptInput";
+// import RoleInput from "./components/RoleInput";
+// import ResponseDisplay from "./components/ResponseDisplay";
+// import PDFTextExtractor from "./components/PDFTextExtractor";
+// import { analyzeResume } from "./api/analyzeApi";
+
+// function App() {
+//   const [prompt, setPrompt] = useState("");
+//   const [role, setRole] = useState("");
+//   const [response, setResponse] = useState({});
+
+//   const handleTextExtraction = (extractedText) => {
+//     setPrompt(extractedText);
+//   };
+
+//   const handleSubmit = async () => {
+//     if (!prompt.trim() || !role.trim()) {
+//       setResponse({ analysis: "Prompt and role cannot be empty!", score: 0 });
+//       return;
+//     }
+
+//     try {
+//       const apiResponse = await analyzeResume(prompt, role);
+//       setResponse(apiResponse);
+//     } catch (error) {
+//       setResponse({ analysis: "Error occurred while analyzing resume.", score: 0 });
+//     }
+//   };
+
+//   return (
+//     <div className="App">
+//     <header className="App-header">
+//       <h1>Resume Analysis with Scoring</h1>
+//       <p>
+//         Upload your resume and specify the role to analyze your resume for relevance, key sections, and formatting. 
+//         Scores are based on a scale of 0–100.
+//       </p>
+//       <PromptInput prompt={prompt} onChange={setPrompt} />
+//       <RoleInput role={role} onChange={setRole} />
+//       <button onClick={handleSubmit}>Submit</button>
+//       <ResponseDisplay response={response} />
+//       <PDFTextExtractor onTextExtract={handleTextExtraction} />
+//     </header>
+//   </div>
+  
+//   );
+// }
+
+// export default App;
+
+
+// import React, { useState } from "react";
+// import PromptInput from "./components/PromptInput";
+// import RoleInput from "./components/RoleInput";
+// import ResponseDisplay from "./components/ResponseDisplay";
+// import PDFTextExtractor from "./components/PDFTextExtractor";
+// import { analyzeResume } from "./api/analyzeApi";
+// import { generatePDFReport } from "./utils/reportGenerator";
+// import { getUsernameContact } from "../../server/services/groqService";
+
+// function App() {
+//   const [prompt, setPrompt] = useState("");
+//   const [role, setRole] = useState("");
+//   // const [candidateName, setCandidateName] = useState("");
+//   const [response, setResponse] = useState({});
+//   const [username, setUsername] = useState("");
+//   const [contactNo, setContactNo] = useState("");
+
+//   const handleTextExtraction = (extractedText, name, contactNumber) => {
+//     setPrompt(extractedText);
+//     setUsername(name);
+//     setContactNo(contactNumber);
+//   };
+
+
+//   const handleSubmit = async () => {
+//     if (!prompt.trim() || !role.trim()) {
+//       setResponse({ analysis: "Prompt and role cannot be empty!", score: 0 });
+//       return;
+//     }
+  
+//     try {
+//       const { uName, contactNumber } = await getUsernameContact();
+//       const apiResponse = await analyzeResume(prompt, role, username, contactNo);
+//       setResponse(apiResponse);
+//     } catch (error) {
+//       setResponse({ analysis: "Error occurred while analyzing resume.", score: 0 });
+//     }
+//   };
+  
+//   const handleDownloadReport = () => {
+//     if (response.analysis) {
+//       generatePDFReport(prompt, role, response);
+//     } else {
+//       alert("No analysis to download. Please submit the resume for analysis first.");
+//     }
+//   };
+
+//   return (
+//     <div className="App">
+//       <header className="App-header">
+//         <h1>Resume Analysis with Scoring</h1>
+
+//         <PromptInput prompt={prompt} onChange={setPrompt} />
+//         <RoleInput role={role} onChange={setRole} />
+//         <button onClick={handleSubmit}>Submit</button>
+//         <ResponseDisplay response={response} candidateName={username} />
+//         <PDFTextExtractor onTextExtract={handleTextExtraction} />
+//         <button onClick={handleDownloadReport}>Download Report</button>
+//       </header>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+  import React, { useState } from "react";
 import PromptInput from "./components/PromptInput";
 import RoleInput from "./components/RoleInput";
 import ResponseDisplay from "./components/ResponseDisplay";
 import PDFTextExtractor from "./components/PDFTextExtractor";
 import { analyzeResume } from "./api/analyzeApi";
+import { generatePDFReport } from "./utils/reportGenerator";
+// import { getUsernameContact } from "../../server/services/groqService";
 
 function App() {
   const [prompt, setPrompt] = useState("");
   const [role, setRole] = useState("");
-  const [response, setResponse] = useState({});
 
-  const handleTextExtraction = (extractedText) => {
+  // const [candidateName, setCandidateName] = useState("");
+  const [response, setResponse] = useState({});
+  const [username, setUsername] = useState("");
+  const [contactNo, setContactNo] = useState("");
+
+
+  const handleTextExtraction = (extractedText, name, contactNumber) => {
     setPrompt(extractedText);
+    setUsername(name);
+    setContactNo(contactNumber);
   };
 
   const handleSubmit = async () => {
@@ -285,30 +411,36 @@ function App() {
     }
 
     try {
-      const apiResponse = await analyzeResume(prompt, role);
+      const apiResponse = await analyzeResume(prompt, role, username, contactNo);
       setResponse(apiResponse);
     } catch (error) {
       setResponse({ analysis: "Error occurred while analyzing resume.", score: 0 });
     }
   };
 
+  const handleDownloadReport = () => {
+        if (response.analysis) {
+          generatePDFReport(prompt, role, response);
+        } else {
+          alert("No analysis to download. Please submit the resume for analysis first.");
+        }
+      };
   return (
     <div className="App">
-    <header className="App-header">
-      <h1>Resume Analysis with Scoring</h1>
-      <p>
-        Upload your resume and specify the role to analyze your resume for relevance, key sections, and formatting. 
-        Scores are based on a scale of 0–100.
-      </p>
-      <PromptInput prompt={prompt} onChange={setPrompt} />
-      <RoleInput role={role} onChange={setRole} />
-      <button onClick={handleSubmit}>Submit</button>
-      <ResponseDisplay response={response} />
-      <PDFTextExtractor onTextExtract={handleTextExtraction} />
-    </header>
-  </div>
-  
+      <header className="App-header">
+        <h1>Resume Analysis with Scoring</h1>
+
+        <p><strong>Username:</strong> {username || "Not extracted yet"}</p>
+        <p><strong>Contact Number:</strong> {contactNo || "Not extracted yet"}</p>
+
+        <PromptInput prompt={prompt} onChange={setPrompt} />
+        <RoleInput role={role} onChange={setRole} />
+        <button onClick={handleSubmit}>Submit</button>
+        <ResponseDisplay response={response} candidateName={username} />
+        <PDFTextExtractor onTextExtract={handleTextExtraction} />
+        <button onClick={handleDownloadReport}>Download Report</button>
+      </header>
+    </div>
   );
 }
-
 export default App;
