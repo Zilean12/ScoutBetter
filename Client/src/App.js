@@ -418,13 +418,22 @@ function App() {
     }
   };
 
+  // const handleDownloadReport = () => {
+  //       if (response.analysis) {
+  //         generatePDFReport(prompt, role, response);
+  //       } else {
+  //         alert("No analysis to download. Please submit the resume for analysis first.");
+  //       }
+  //     };
+
   const handleDownloadReport = () => {
-        if (response.analysis) {
-          generatePDFReport(prompt, role, response);
-        } else {
-          alert("No analysis to download. Please submit the resume for analysis first.");
-        }
-      };
+    if (response.analysis) {
+      generatePDFReport(prompt, role, response, username, contactNo);
+    } else {
+      alert("No analysis to download. Please submit the resume for analysis first.");
+    }
+  };
+  
   return (
     <div className="App">
       <header className="App-header">
