@@ -1,0 +1,41 @@
+.pdf-extractor {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .drag-drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+    cursor: pointer;
+  }
+  
+  .drag-drop-area:hover {
+    background-color: #e6e6e6;
+  }
+  
+  .file-upload-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .file-upload-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .feedback {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #ff0000;
+  }
+  

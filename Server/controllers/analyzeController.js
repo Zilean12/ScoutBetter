@@ -15,3 +15,4 @@ exports.analyzeResume = async (req, res) => {
     res.status(500).json({ error: "An error occurred while processing the request." });
   }
 };
+

@@ -88,76 +88,218 @@
 
 // export default App;
 
+// import React, { useState } from "react";
+// import "./App.css";
+// import { PDFTextExtractor } from "./PDFTextExtractor";
+// import axios from "axios";
+
+// function App() {
+//   const [prompt, setPrompt] = useState(""); // Store the prompt (extracted text)
+//   const [response, setResponse] = useState(""); // Store the response from the API
+//   const [text, setText] = useState(""); // Store the raw extracted text
+//   const [role, setRole] = useState("");
+
+//   // Update the extracted text in the parent component (App)
+//   const handleTextExtraction = (extractedText) => {
+//     setText(extractedText); // Update local state with extracted text
+//     setPrompt(extractedText); // Set the extracted text as the prompt for the API
+//   };
+
+//   // Handle prompt change (used for manual input)
+//   const handlePromptChange = (event) => {
+//     setPrompt(event.target.value);
+//   };
+//   const handleRoleChange = (event) => {
+//     setRole(event.target.value);
+//   };
+
+//   // Handle API submission
+//   const handleSubmit = async () => {
+//     if (prompt.trim() === "" || role.trim() === "") {
+//       setResponse("Prompt and role cannot be empty!");
+//       return;
+//     }
+
+//     try {
+//       const { data } = await axios.post("http://localhost:5000/analyze", {
+//         prompt,
+//         role,
+//       });
+//       setResponse(data.response);
+//     } catch (error) {
+//       console.error("Error fetching response from server:", error);
+//       setResponse("An error occurred while fetching the response.");
+//     }
+//   };
+
+//   return (
+//     <div className="App">
+//       <header className="App-header">
+//         <h1>Resume Analysis</h1>
+//         <input
+//           type="text"
+//           id="prompt"
+//           value={prompt}
+//           onChange={handlePromptChange}
+//           placeholder="Type your prompt here..."
+//         />
+//         <input
+//           type="text"
+//           id="role"
+//           value={role}
+//           onChange={handleRoleChange}
+//           placeholder="Enter Role"
+//         />
+//         <button onClick={handleSubmit}>Submit</button>
+
+//         <div className="response">
+//           <h2>Response:</h2>
+//           <p>{response}</p>
+//         </div>
+
+//         {/* Pass the handleTextExtraction function to PDFTextExtractor */}
+//         <PDFTextExtractor onTextExtract={handleTextExtraction} />
+//       </header>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+// Testing phase 2
+
+// import React, { useState } from "react";
+// import "./App.css";
+// import PromptInput from "./components/PromptInput";
+// import RoleInput from "./components/RoleInput";
+// import ResponseDisplay from "./components/ResponseDisplay";
+// import PDFTextExtractor from "./components/PDFTextExtractor";
+// import { analyzeResume } from "./api/analyzeApi";
+
+// function App() {
+//   const [prompt, setPrompt] = useState("");
+//   const [role, setRole] = useState("");
+//   const [response, setResponse] = useState("");
+
+//   const handleTextExtraction = (extractedText) => {
+//     setPrompt(extractedText);
+//   };
+
+//   const handleSubmit = async () => {
+//     if (!prompt.trim() || !role.trim()) {
+//       setResponse("Prompt and role cannot be empty!");
+//       return;
+//     }
+
+//     try {
+//       const apiResponse = await analyzeResume(prompt, role);
+//       setResponse(apiResponse);
+//     } catch (error) {
+//       setResponse(error.message);
+//     }
+//   };
+
+//   return (
+//     <div className="App">
+//       <header className="App-header">
+//         <h1>Resume Analysis</h1>
+//         <PromptInput prompt={prompt} onChange={setPrompt} />
+//         <RoleInput role={role} onChange={setRole} />
+//         <button onClick={handleSubmit}>Submit</button>
+//         <ResponseDisplay response={response} />
+//         <PDFTextExtractor onTextExtract={handleTextExtraction} />
+//       </header>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+// import React, { useState } from "react";
+// import "./App.css";
+// import PromptInput from "./components/PromptInput";
+// import RoleInput from "./components/RoleInput";
+// import ResponseDisplay from "./components/ResponseDisplay";
+// import PDFTextExtractor from "./components/PDFTextExtractor";
+// import { analyzeResume } from "./api/analyzeApi";
+
+// function App() {
+//   const [prompt, setPrompt] = useState("");
+//   const [role, setRole] = useState("");
+//   const [response, setResponse] = useState("");
+
+//   const handleTextExtraction = (extractedText) => {
+//     setPrompt(extractedText);
+//   };
+
+//   const handleSubmit = async () => {
+//     if (!prompt.trim() || !role.trim()) {
+//       setResponse("Prompt and role cannot be empty!");
+//       return;
+//     }
+
+//     try {
+//       const apiResponse = await analyzeResume(prompt, role);
+//       setResponse(apiResponse);
+//     } catch (error) {
+//       setResponse(error.message);
+//     }
+//   };
+
+//   return (
+//     <div className="App">
+//       <header className="App-header">
+//         <h1>Resume Analysis</h1>
+//         <PromptInput prompt={prompt} onChange={setPrompt} />
+//         <RoleInput role={role} onChange={setRole} />
+//         <button onClick={handleSubmit}>Submit</button>
+//         <ResponseDisplay response={response} />
+//         <PDFTextExtractor onTextExtract={handleTextExtraction} />
+//       </header>
+//     </div>
+//   );
+// }
+
+// export default App;
+
 import React, { useState } from "react";
-import "./App.css";
-import { PDFTextExtractor } from "./PDFTextExtractor";
-import axios from "axios";
+import PromptInput from "./components/PromptInput";
+import RoleInput from "./components/RoleInput";
+import ResponseDisplay from "./components/ResponseDisplay";
+import PDFTextExtractor from "./components/PDFTextExtractor";
+import { analyzeResume } from "./api/analyzeApi";
 
 function App() {
-  const [prompt, setPrompt] = useState(""); // Store the prompt (extracted text)
-  const [response, setResponse] = useState(""); // Store the response from the API
-  const [text, setText] = useState(""); // Store the raw extracted text
+  const [prompt, setPrompt] = useState("");
   const [role, setRole] = useState("");
+  const [response, setResponse] = useState({});
 
-  // Update the extracted text in the parent component (App)
   const handleTextExtraction = (extractedText) => {
-    setText(extractedText); // Update local state with extracted text
-    setPrompt(extractedText); // Set the extracted text as the prompt for the API
+    setPrompt(extractedText);
   };
 
-  // Handle prompt change (used for manual input)
-  const handlePromptChange = (event) => {
-    setPrompt(event.target.value);
-  };
-  const handleRoleChange = (event) => {
-    setRole(event.target.value);
-  };
-
-  // Handle API submission
   const handleSubmit = async () => {
-    if (prompt.trim() === "" || role.trim() === "") {
-      setResponse("Prompt and role cannot be empty!");
+    if (!prompt.trim() || !role.trim()) {
+      setResponse({ analysis: "Prompt and role cannot be empty!", score: 0 });
       return;
     }
 
     try {
-      const { data } = await axios.post("http://localhost:5000/analyze", {
-        prompt,
-        role,
-      });
-      setResponse(data.response);
+      const apiResponse = await analyzeResume(prompt, role);
+      setResponse(apiResponse);
     } catch (error) {
-      console.error("Error fetching response from server:", error);
-      setResponse("An error occurred while fetching the response.");
+      setResponse({ analysis: "Error occurred while analyzing resume.", score: 0 });
     }
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Resume Analysis</h1>
-        <input
-          type="text"
-          id="prompt"
-          value={prompt}
-          onChange={handlePromptChange}
-          placeholder="Type your prompt here..."
-        />
-        <input
-          type="text"
-          id="role"
-          value={role}
-          onChange={handleRoleChange}
-          placeholder="Enter Role"
-        />
+        <h1>Resume Analysis with Scoring</h1>
+        <PromptInput prompt={prompt} onChange={setPrompt} />
+        <RoleInput role={role} onChange={setRole} />
         <button onClick={handleSubmit}>Submit</button>
-
-        <div className="response">
-          <h2>Response:</h2>
-          <p>{response}</p>
-        </div>
-
-        {/* Pass the handleTextExtraction function to PDFTextExtractor */}
+        <ResponseDisplay response={response} />
         <PDFTextExtractor onTextExtract={handleTextExtraction} />
       </header>
     </div>
