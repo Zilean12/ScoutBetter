@@ -277,8 +277,8 @@ const requirement = `
   - Email ID
 
 - Then, move to the **Project Details** section, with individual project titles as subsections.
-
-- Follow with the **Analysis Report Section** and provide scores for the overall resume.
+- **Certifications** section 
+- Follow with the **Analysis Report Section**
 
 - Use **bullet points** to highlight:
   - Strengths
@@ -365,18 +365,47 @@ exports.getUsernameContact = async (prompt) => {
  * @param {string} jobDescription - The job description for relevance analysis.
  * @returns {number} - The calculated score (0–100).
  */
+// const calculateResumeScore = (resumeText, jobDescription) => {
+//   let totalScore = 0;
+
+//   // Relevance to Job Description (50 points)
+//   const keywords = extractKeywords(jobDescription);
+//   const keywordMatches = keywords.filter((keyword) => resumeText.includes(keyword)).length;
+//   const relevanceScore = Math.min((keywordMatches / keywords.length) * SCORE_WEIGHTS.relevance, SCORE_WEIGHTS.relevance);
+
+//   // Inclusion of Key Sections (30 points)
+//   const sectionMatches = REQUIRED_SECTIONS.filter((section) =>
+//     resumeText.toLowerCase().includes(section.toLowerCase())
+//   ).length;
+//   const sectionsScore = (sectionMatches / REQUIRED_SECTIONS.length) * SCORE_WEIGHTS.sections;
+
+//   // Formatting Quality (20 points)
+//   const formattingScore = checkFormattingQuality(resumeText) * SCORE_WEIGHTS.formatting;
+
+//   // Total Score
+//   totalScore = relevanceScore + sectionsScore + formattingScore;
+//   return Math.round(totalScore);
+// };
+
 const calculateResumeScore = (resumeText, jobDescription) => {
   let totalScore = 0;
 
   // Relevance to Job Description (50 points)
   const keywords = extractKeywords(jobDescription);
   const keywordMatches = keywords.filter((keyword) => resumeText.includes(keyword)).length;
-  const relevanceScore = Math.min((keywordMatches / keywords.length) * SCORE_WEIGHTS.relevance, SCORE_WEIGHTS.relevance);
+
+  // Moderate check for relevance: partial match will give partial score
+  const relevanceRatio = keywordMatches / keywords.length;
+  const relevanceScore = relevanceRatio >= 0.5 
+    ? relevanceRatio * SCORE_WEIGHTS.relevance 
+    : (relevanceRatio * SCORE_WEIGHTS.relevance) / 2;
 
   // Inclusion of Key Sections (30 points)
   const sectionMatches = REQUIRED_SECTIONS.filter((section) =>
     resumeText.toLowerCase().includes(section.toLowerCase())
   ).length;
+
+  // Moderate scoring for sections: give credit even for partial matches
   const sectionsScore = (sectionMatches / REQUIRED_SECTIONS.length) * SCORE_WEIGHTS.sections;
 
   // Formatting Quality (20 points)
@@ -384,8 +413,11 @@ const calculateResumeScore = (resumeText, jobDescription) => {
 
   // Total Score
   totalScore = relevanceScore + sectionsScore + formattingScore;
+
+  // Normalize score to 100
   return Math.round(totalScore);
 };
+
 
 /**
  * Analyzes strengths and weaknesses of the resume.
@@ -394,6 +426,39 @@ const calculateResumeScore = (resumeText, jobDescription) => {
  * @param {string} jobDescription - The job description for relevance analysis.
  * @returns {object} - An object containing arrays of strengths and weaknesses.
  */
+// const analyzeHighlights = (resumeText, jobDescription) => {
+//   const strengths = [];
+//   const weaknesses = [];
+
+//   // Relevance
+//   const keywords = extractKeywords(jobDescription);
+//   const keywordMatches = keywords.filter((keyword) => resumeText.includes(keyword)).length;
+//   if (keywordMatches / keywords.length >= 0.7) {
+//     strengths.push("Good alignment with job description.");
+//   } else {
+//     weaknesses.push("Low alignment with job description. Add more role-specific keywords.");
+//   }
+
+//   // Sections
+//   REQUIRED_SECTIONS.forEach((section) => {
+//     if (resumeText.toLowerCase().includes(section.toLowerCase())) {
+//       strengths.push(`Includes the section: ${section}.`);
+//     } else {
+//       weaknesses.push(`Missing the section: ${section}.`);
+//     }
+//   });
+
+//   // Formatting
+//   const formattingScore = checkFormattingQuality(resumeText);
+//   if (formattingScore > 0.8) {
+//     strengths.push("Well-formatted with proper bullet points and spacing.");
+//   } else {
+//     weaknesses.push("Formatting could be improved with more bullet points or better structure.");
+//   }
+
+//   return { strengths, weaknesses };
+// };
+
 const analyzeHighlights = (resumeText, jobDescription) => {
   const strengths = [];
   const weaknesses = [];
@@ -401,10 +466,15 @@ const analyzeHighlights = (resumeText, jobDescription) => {
   // Relevance
   const keywords = extractKeywords(jobDescription);
   const keywordMatches = keywords.filter((keyword) => resumeText.includes(keyword)).length;
-  if (keywordMatches / keywords.length >= 0.7) {
-    strengths.push("Good alignment with job description.");
+  const relevanceRatio = keywordMatches / keywords.length;
+
+  if (relevanceRatio >= 0.9) {
+    strengths.push("Strong alignment with job description.");
+  } else if (relevanceRatio >= 0.8) {
+    strengths.push("Moderate alignment with job description.");
+    weaknesses.push("Add more role-specific keywords to improve relevance.");
   } else {
-    weaknesses.push("Low alignment with job description. Add more role-specific keywords.");
+    weaknesses.push("Low alignment with job description. Add significantly more role-specific keywords.");
   }
 
   // Sections
@@ -420,12 +490,16 @@ const analyzeHighlights = (resumeText, jobDescription) => {
   const formattingScore = checkFormattingQuality(resumeText);
   if (formattingScore > 0.8) {
     strengths.push("Well-formatted with proper bullet points and spacing.");
+  } else if (formattingScore > 0.9) {
+    strengths.push("Decent formatting with room for improvement.");
+    weaknesses.push("Consider improving formatting by using consistent bullet points and spacing.");
   } else {
-    weaknesses.push("Formatting could be improved with more bullet points or better structure.");
+    weaknesses.push("Formatting is poor. Use more bullet points or a better structure.");
   }
 
   return { strengths, weaknesses };
 };
+
 
 /**
  * Extracts keywords from a given text.

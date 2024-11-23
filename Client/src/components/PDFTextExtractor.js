@@ -552,12 +552,11 @@
 
 // export default PDFTextExtractor;
 
-
-import React, { useState } from "react";
-import pdfToText from "react-pdftotext";
+import React, { useState } from "react"; 
+import pdfToText from "react-pdftotext"; 
 
 function PDFTextExtractor({ onTextExtract }) {
-  const [texts, setTexts] = useState(""); // Use a single string to accumulate all texts
+  const [texts, setTexts] = useState(""); 
   const [feedback, setFeedback] = useState("");
 
   const MAX_FILE_SIZE_MB = 5;
@@ -565,16 +564,10 @@ function PDFTextExtractor({ onTextExtract }) {
   const extractText = (file, index) => {
     pdfToText(file)
       .then((extractedText) => {
-        // Format the text for this specific file
         const formattedText = `[resume ${index + 1}]\n${extractedText}\n[end of resume ${index + 1}]`;
-
-        // Append the formatted text to the existing content
         setTexts((prevTexts) => prevTexts + "\n" + formattedText);
-
         setFeedback("Text extracted successfully!");
-
-        // Send the accumulated text (all files) to the parent component
-        onTextExtract(formattedText); // Optionally send individual file content here if required
+        onTextExtract(formattedText);
       })
       .catch((error) => {
         console.error("Failed to extract text from PDF", error);
@@ -616,13 +609,13 @@ function PDFTextExtractor({ onTextExtract }) {
   };
 
   return (
-    <div className="pdf-extractor max-w-4xl mx-auto p-8 bg-gradient-to-r from-blue-100 to-blue-50 shadow-2xl rounded-lg">
+    <div className="pdf-extractor max-w-4xl mx-auto p-12 bg-gradient-to-r from-blue-100 to-blue-50 shadow-2xl rounded-lg">
       <div
-        className="drag-drop-area border-4 border-dashed border-indigo-500 p-8 text-center rounded-xl cursor-pointer transition-all hover:border-indigo-700 hover:bg-indigo-50"
+        className="drag-drop-area border-4 border-dashed border-indigo-500 p-12 text-center rounded-xl cursor-pointer transition-all hover:border-indigo-700 hover:bg-indigo-50"
         onDragOver={(e) => e.preventDefault()}
         onDrop={handleDrop}
       >
-        <p className="text-gray-700 font-semibold text-lg mb-5">Drag and drop your PDF files here, or click to upload.</p>
+        <p className="text-gray-700 font-semibold text-lg mb-8">Drag and drop your PDF files here, or click to upload.</p>
         <input
           type="file"
           accept="application/pdf"
@@ -633,7 +626,7 @@ function PDFTextExtractor({ onTextExtract }) {
         />
         <label
           htmlFor="fileInput"
-          className="file-upload-button inline-block px-6 py-3 bg-indigo-600 text-white rounded-lg text-xl font-semibold shadow-md cursor-pointer transform transition-transform duration-200 hover:scale-105"
+          className="file-upload-button inline-block px-8 py-4 bg-indigo-600 text-white rounded-lg text-xl font-semibold shadow-md cursor-pointer transform transition-transform duration-200 hover:scale-105"
         >
           Choose Files
         </label>
@@ -641,20 +634,20 @@ function PDFTextExtractor({ onTextExtract }) {
 
       {feedback && (
         <p
-          className={`feedback mt-4 text-center p-3 rounded-md ${feedback.includes("successfully") ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}`}
+          className={`feedback mt-8 text-center p-4 rounded-md ${feedback.includes("successfully") ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}`}
         >
           {feedback}
         </p>
       )}
 
       {texts && (
-        <div className="mt-6">
-          <h4>Extracted Text from Files:</h4>
+        <div className="mt-8">
+          <h4 className="text-xl font-bold mb-4">Extracted Text from Files:</h4>
           <textarea
-            value={texts} // Display all extracted text in one textarea
+            value={texts}
             readOnly
             rows="12"
-            className="w-full p-5 border rounded-lg bg-white text-gray-700 shadow-lg resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+            className="w-full p-6 border rounded-lg bg-white text-gray-700 shadow-lg resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
             style={{ height: "250px" }}
           />
         </div>
