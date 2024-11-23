@@ -9,3 +9,4 @@ export const analyzeResume = async (prompt, role) => {
     throw new Error("An error occurred while fetching the response.");
   }
 };
+

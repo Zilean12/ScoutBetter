@@ -216,8 +216,8 @@ import pdfToText from "react-pdftotext";
 import "./PDFTextExtractor.css";
 
 function PDFTextExtractor({ onTextExtract }) {
-  const [text, setText] = useState("");
-  const [feedback, setFeedback] = useState("");
+    const [text, setText] = useState("");
+   const [feedback, setFeedback] = useState("");
 
   const MAX_FILE_SIZE_MB = 5;
 
