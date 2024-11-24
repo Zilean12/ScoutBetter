@@ -253,9 +253,9 @@ const analyzeHighlights = (resumeText, jobDescription) => {
 
   // Formatting
   const formattingScore = checkFormattingQuality(resumeText);
-  if (formattingScore > 0.8) {
+  if (formattingScore > 0.6) {
     strengths.push("Well-formatted with proper bullet points and spacing.");
-  } else if (formattingScore > 0.9) {
+  } else if (formattingScore > 0.4) {
     strengths.push("Decent formatting with room for improvement.");
     weaknesses.push("Consider improving formatting by using consistent bullet points and spacing.");
   } else {
