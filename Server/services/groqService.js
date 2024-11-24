@@ -41,7 +41,8 @@ const requirement = `
   - Email ID
 
 - Then, move to the **Project Details** section, with individual project titles as subsections.
-- **Certifications** section 
+- **Certifications** section
+- **Experience** section
 - Follow with the **Analysis Report Section**
 
 - Use **bullet points** to highlight:
