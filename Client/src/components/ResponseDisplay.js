@@ -1,149 +1,8 @@
-// import React from "react";
-
-// function ResponseDisplay({ response }) {
-//   return (
-//     <div className="response">
-//       <h2>Response:</h2>
-//       <p>{response}</p>
-//     </div>
-//   );
-// }
-
-// export default ResponseDisplay;
-
-
-// import React from "react";
-// import "./ResponseDisplay.css";
-// import { marked } from 'marked';
-
-
-// function ResponseDisplay({ response }) {
-//   if (!response || !response.score) {
-//     return null;
-//   }
-
-//   const { analysis, score } = response;
-
-//   const scoreHighlights = `
-//     - **Relevance to Job Description (50%):** How well the resume matches the job description.
-//     - **Inclusion of Key Sections (30%):** Ensures the presence of essential sections (e.g., Skills, Experience).
-//     - **Formatting Quality (20%):** Evaluates bullet points, spacing, and structure.
-//   `;
-
-//   const formattedAnalysis = marked(analysis);  // Format analysis using Markdown
-
-//   return (
-//     <div className="response-display">
-//       <h3>Resume Analysis</h3>
-//       <div dangerouslySetInnerHTML={{ __html: formattedAnalysis }} />
-
-//       <h3>Resume Score</h3>
-//       <div className="progress-bar-container">
-//         <div
-//           className="progress-bar"
-//           style={{ width: `${score}%`, backgroundColor: score >= 70 ? "green" : "orange" }}
-//         >
-//           <span className="progress-text">{score}/100</span>
-//         </div>
-//       </div>
-
-//       <h4>Scoring Criteria</h4>
-//       <ul>
-//         <li><strong>Relevance:</strong> 50%</li>
-//         <li><strong>Key Sections:</strong> 30%</li>
-//         <li><strong>Formatting:</strong> 20%</li>
-//       </ul>
-
-//       <h4>Key Highlights</h4>
-//       <p>{scoreHighlights}</p>
-//     </div>
-//   );
-// }
-
-
-
-// export default ResponseDisplay;
-
-
-// import React from "react";
-// import "./ResponseDisplay.css";
-// import { marked } from "marked";
-
-// function ResponseDisplay({ response, candidateName }) {
-//   if (!response || !response.score) {
-//     return null;
-//   }
-
-//   const { analysis, score, highlights } = response;
-
-//   // Markdown-rendered analysis
-//   const formattedAnalysis = marked(analysis || "No analysis provided.");
-
-//   // Score highlights dynamically rendered
-//   const scoreDetails = [
-//     { title: "Relevance to Job Description", weight: 50, description: "How well the resume matches the job description." },
-//     { title: "Inclusion of Key Sections", weight: 30, description: "Ensures the presence of essential sections (e.g., Skills, Experience)." },
-//     { title: "Formatting Quality", weight: 20, description: "Evaluates bullet points, spacing, and structure." },
-//   ];
-
-//   return (
-//     <div className="response-display bg-white shadow-lg p-6 rounded-lg">
-//       {candidateName && (
-//         <h3 className="text-xl font-semibold text-indigo-600">
-//           Resume Analysis for {candidateName}
-//         </h3>
-//       )}
-
-//       <div dangerouslySetInnerHTML={{ __html: formattedAnalysis }} className="mt-4 text-gray-700" />
-
-//       <h3 className="mt-6 text-lg font-bold text-indigo-700">Resume Score</h3>
-//       <div className="progress-bar-container bg-gray-200 rounded-full h-6 mt-4 overflow-hidden relative">
-//         <div
-//           className={`progress-bar h-full transition-all duration-300 ${
-//             score >= 70 ? "bg-green-500" : "bg-orange-500"
-//           }`}
-//           style={{ width: `${score}%` }}
-//         />
-//         <span className="absolute inset-0 flex items-center justify-center font-semibold text-white">
-//           {score}/100
-//         </span>
-//       </div>
-
-//       <h4 className="mt-6 text-md font-semibold text-gray-800">Scoring Criteria</h4>
-//       <ul className="list-disc pl-6 text-gray-600 mt-2">
-//         {scoreDetails.map((detail, index) => (
-//           <li key={index}>
-//             <strong>{detail.title} ({detail.weight}%):</strong> {detail.description}
-//           </li>
-//         ))}
-//       </ul>
-
-//       {highlights && (
-//         <>
-//           <h4 className="mt-6 text-md font-semibold text-gray-800">Key Highlights</h4>
-//           <div className="mt-2 text-gray-600">
-//             <h5 className="font-bold">Strengths:</h5>
-//             <ul className="list-disc pl-6">
-//               {highlights.strengths?.map((strength, index) => (
-//                 <li key={index}>{strength}</li>
-//               )) || <li>No strengths identified.</li>}
-//             </ul>
-//             <h5 className="mt-4 font-bold">Weaknesses:</h5>
-//             <ul className="list-disc pl-6">
-//               {highlights.weaknesses?.map((weakness, index) => (
-//                 <li key={index}>{weakness}</li>
-//               )) || <li>No weaknesses identified.</li>}
-//             </ul>
-//           </div>
-//         </>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default ResponseDisplay;
 import React from "react";
 import { marked } from "marked";
+import { Card, CardContent, CardHeader, CardTitle } from "./UI/Card";
+import { Badge } from "./UI/Badge";
+import { AlertCircle, CheckCircle, Target, Layout, FileText } from "lucide-react";
 
 function ResponseDisplay({ response, candidateName }) {
   if (!response || !response.score) {
@@ -151,71 +10,173 @@ function ResponseDisplay({ response, candidateName }) {
   }
 
   const { analysis, score, highlights } = response;
-
-  // Markdown-rendered analysis
   const formattedAnalysis = marked(analysis || "No analysis provided.");
 
-  // Score highlights dynamically rendered
   const scoreDetails = [
-    { title: "Relevance to Job Description", weight: 50, description: "How well the resume matches the job description." },
-    { title: "Inclusion of Key Sections", weight: 30, description: "Ensures the presence of essential sections (e.g., Skills, Experience)." },
-    { title: "Formatting Quality", weight: 20, description: "Evaluates bullet points, spacing, and structure." },
+    { 
+      title: "Relevance to Job Description", 
+      weight: 50, 
+      description: "How well the resume matches the job description.",
+      icon: <Target className="w-5 h-5" />
+    },
+    { 
+      title: "Inclusion of Key Sections", 
+      weight: 30, 
+      description: "Ensures the presence of essential sections (e.g., Skills, Experience).",
+      icon: <FileText className="w-5 h-5" />
+    },
+    { 
+      title: "Formatting Quality", 
+      weight: 20, 
+      description: "Evaluates bullet points, spacing, and structure.",
+      icon: <Layout className="w-5 h-5" />
+    },
   ];
 
+  const getScoreColor = (score) => {
+    if (score >= 80) return "text-green-400 dark:text-green-300";
+    if (score >= 60) return "text-yellow-400 dark:text-yellow-300";
+    return "text-red-400 dark:text-red-300";
+  };
+
   return (
-    <div className="bg-white shadow-md p-4 rounded-lg mt-4 max-3xl mx-auto">
+    <div className="space-y-4 max-w-9xl mx-auto">
+      {/* Header Card */}
       {candidateName && (
-        <h3 className="text-2xl font-semibold text-gray-800 mb-2">
-          Resume Analysis for {candidateName}
-        </h3>
+        <Card className="bg-gradient-to-r from-purple-500 to-indigo-600 border-0">
+          <CardHeader>
+            <CardTitle className="text-3xl font-bold text-white">
+              Resume Analysis for {candidateName}
+            </CardTitle>
+            <div className="flex items-center mt-2 space-x-2">
+              <Badge variant="secondary" className="text-lg px-4 py-1 bg-white/20 text-white">
+                Score: {score}/100
+              </Badge>
+            </div>
+          </CardHeader>
+        </Card>
       )}
 
-      <div
-        dangerouslySetInnerHTML={{ __html: formattedAnalysis }}
-        className="mt-2 text-gray-700 leading-relaxed"
-      />
+      {/* Analysis Card */}
+      <Card className="border-t-4 border-t-indigo-500 dark:bg-gray-800/50">
+        <CardHeader>
+          <CardTitle className="text-2xl flex items-center gap-0 dark:text-white">
+            <FileText className="w-2 h-6 text-indigo-400" />
+            Detailed Analysis
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div
+            dangerouslySetInnerHTML={{ __html: formattedAnalysis }}
+            className="prose dark:prose-invert max-w-none space-y-3 text-lg dark:text-gray-200"
+          />
+        </CardContent>
+      </Card>
 
-      <h3 className="mt-4 text-lg font-semibold text-gray-800">Resume Score</h3>
-      <div className="w-full bg-gray-300 rounded-full h-8 mt-2 overflow-hidden relative">
-        <div
-          className={`h-full transition-all duration-500 ease-in-out ${score >= 70 ? "bg-green-400" : "bg-yellow-400"}`}
-          style={{ width: `${score}%` }}
-        />
-        <span className="absolute inset-0 flex items-center justify-center text-white font-semibold text-lg">
-          {score}/100
-        </span>
-      </div>
+      {/* Score Visualization */}
+      <Card className="dark:bg-gray-800/50">
+        <CardHeader>
+          <CardTitle className="text-2xl dark:text-white">Score Breakdown</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {/* Overall Score */}
+            <div className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+              <span className={`text-5xl font-bold ${getScoreColor(score)}`}>
+                {score}
+              </span>
+              <span className="text-2xl text-gray-400 dark:text-gray-500">/100</span>
+              <div className="mt-3 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                <div
+                  className={`h-full rounded-full transition-all duration-500 ease-out ${
+                    score >= 80 
+                      ? "bg-green-500 dark:bg-green-400" 
+                      : score >= 60 
+                        ? "bg-yellow-500 dark:bg-yellow-400" 
+                        : "bg-red-500 dark:bg-red-400"
+                  }`}
+                  style={{ width: `${score}%` }}
+                />
+              </div>
+            </div>
 
-      <h4 className="mt-4 text-md font-semibold text-gray-800">Scoring Criteria</h4>
-      <ul className="list-disc pl-6 text-gray-600 mt-2 space-y-1">
-        {scoreDetails.map((detail, index) => (
-          <li key={index} className="flex flex-col space-y-1">
-            <span className="text-md font-medium text-gray-700">
-              {detail.title} ({detail.weight}%):
-            </span>
-            <span>{detail.description}</span>
-          </li>
-        ))}
-      </ul>
-
-      {highlights && (
-        <>
-          <h4 className="mt-4 text-md font-semibold text-gray-800">Key Highlights</h4>
-          <div className="mt-2 text-gray-600">
-            <h5 className="font-semibold text-gray-700">Strengths:</h5>
-            <ul className="list-disc pl-6 space-y-1">
-              {highlights.strengths?.map((strength, index) => (
-                <li key={index} className="text-md">{strength}</li>
-              )) || <li className="text-md">No strengths identified.</li>}
-            </ul>
-            <h5 className="mt-2 font-semibold text-gray-700">Weaknesses:</h5>
-            <ul className="list-disc pl-6 space-y-1">
-              {highlights.weaknesses?.map((weakness, index) => (
-                <li key={index} className="text-md">{weakness}</li>
-              )) || <li className="text-md">No weaknesses identified.</li>}
-            </ul>
+            {/* Scoring Criteria */}
+            <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+              {scoreDetails.map((detail, index) => (
+                <div
+                  key={index}
+                  className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="text-indigo-500 dark:text-indigo-400">
+                      {detail.icon}
+                    </div>
+                    <h4 className="font-semibold dark:text-white">{detail.title}</h4>
+                  </div>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">{detail.description}</p>
+                  <div className="mt-2">
+                    <Badge variant="secondary" className="text-lg dark:bg-gray-700 dark:text-gray-200">
+                      Weight: {detail.weight}%
+                    </Badge>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </>
+        </CardContent>
+      </Card>
+
+      {/* Highlights Card */}
+      {highlights && (
+        <div className="grid gap-4 md:grid-cols-2">
+          {/* Strengths */}
+          <Card className="border-t-4 border-t-green-500 dark:bg-gray-800/50">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 dark:text-white">
+                <CheckCircle className="w-5 h-5 text-green-400" />
+                Strengths
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-1">
+                {highlights.strengths?.length > 0 ? (
+                  highlights.strengths.map((strength, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 mt-1 text-green-400 flex-shrink-0" />
+                      <span className="dark:text-gray-200">{strength}</span>
+                    </li>
+                  ))
+                ) : (
+                  <li className="text-gray-500 dark:text-gray-400">No strengths identified.</li>
+                )}
+              </ul>
+            </CardContent>
+          </Card>
+
+          {/* Weaknesses */}
+          <Card className="border-t-4 border-t-red-500 dark:bg-gray-800/50">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 dark:text-white">
+                <AlertCircle className="w-5 h-5 text-red-400" />
+                Areas for Improvement
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-1">
+                {highlights.weaknesses?.length > 0 ? (
+                  highlights.weaknesses.map((weakness, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <AlertCircle className="w-4 h-4 mt-1 text-red-400 flex-shrink-0" />
+                      <span className="dark:text-gray-200">{weakness}</span>
+                    </li>
+                  ))
+                ) : (
+                  <li className="text-gray-500 dark:text-gray-400">No weaknesses identified.</li>
+                )}
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
       )}
     </div>
   );
