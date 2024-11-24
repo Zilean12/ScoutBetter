@@ -52,6 +52,16 @@ const app = express(); // Create an Express application instance
 
 // Middleware to enable CORS for cross-origin requests
 app.use(cors());
+
+
+// Configure CORS to allow requests from your Netlify domain and localhost
+app.use(cors({
+  origin: ['https://resume-analyzer123.netlify.app', 'http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}))
+
+
 // Middleware to parse JSON request bodies
 app.use(bodyParser.json());
 
@@ -59,7 +69,7 @@ app.use(bodyParser.json());
 app.use("/analyze", analyzeRoutes);
 
 // Start the server and listen on the specified port
-const PORT = process.env.PORT || 5000; // Port is taken from the .env file or defaults to 5000
+const PORT = 5000; // Port is taken from the .env file or defaults to 5000
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`); // Log a message to indicate server is up
 });
