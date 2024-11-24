@@ -56,10 +56,7 @@ app.use(cors());
 
 // Configure CORS to allow requests from your Netlify domain and localhost
 app.use(cors({
-  origin: ['https://resume-analyzer123.netlify.app', 'http://localhost:3000'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}))
+  origin: ['https://resume-analyzer123.netlify.app', 'http://localhost:3000']}))
 
 
 // Middleware to parse JSON request bodies
