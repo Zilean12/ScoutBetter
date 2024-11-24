@@ -3,7 +3,12 @@ import React from "react";
 function RoleInput({ role, onChange }) {
   return (
     <div className="w-full max-w-xs mx-auto">
-      <label className="block text-lg font-semibold text-gray-700 mb-2">Role</label>
+      <label
+        htmlFor="role"
+        className="block text-xl font-medium text-gray-800 dark:text-white mb-4" 
+      >
+        Role
+      </label>
       <input
         type="text"
         value={role}
@@ -16,3 +21,4 @@ function RoleInput({ role, onChange }) {
 }
 
 export default RoleInput;
+
