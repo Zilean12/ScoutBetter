@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import PromptInput from "./components/PromptInput";
 import RoleInput from "./components/RoleInput";
 import ResponseDisplay from "./components/ResponseDisplay";
 import PDFTextExtractor from "./components/PDFTextExtractor";
 import { analyzeResume } from "./api/analyzeApi";
 import { generatePDFReport } from "./utils/reportGenerator";
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, RefreshCw } from 'lucide-react';
 import './styles/globals.css';
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
   const [username, setUsername] = useState("");
   const [contactNo, setContactNo] = useState("");
   const [darkMode, setDarkMode] = useState(false);
+  const pdfTextExtractorRef = useRef(null);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -47,6 +48,17 @@ function App() {
     }
   };
 
+  const handleReset = () => {
+    setPrompt("");
+    setRole("");
+    setResponse({});
+    setUsername("");
+    setContactNo("");
+    if (pdfTextExtractorRef.current) {
+      pdfTextExtractorRef.current.resetFeedback();
+    }
+  };
+
   return (
     <div className={`min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 dark:from-gray-900 dark:to-indigo-900 transition-colors duration-300 py-12 px-4 sm:px-6 lg:px-8`}>
       <div className="max-w-7xl mx-auto">
@@ -55,12 +67,21 @@ function App() {
             <h1 className="text-4xl font-extrabold text-indigo-700 dark:text-indigo-300">
               Resume Analysis
             </h1>
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-full bg-indigo-100 dark:bg-indigo-800 text-indigo-600 dark:text-indigo-200 transition-colors duration-200 hover:bg-indigo-200 dark:hover:bg-indigo-700"
-            >
-              {darkMode ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
-            </button>
+            <div className="flex space-x-4">
+              <button
+                onClick={handleReset}
+                className="p-2 rounded-full bg-red-100 dark:bg-red-800 text-red-600 dark:text-red-200 transition-colors duration-200 hover:bg-red-200 dark:hover:bg-red-700"
+                title="Reset and try another resume"
+              >
+                <RefreshCw className="w-6 h-6" />
+              </button>
+              <button
+                onClick={toggleDarkMode}
+                className="p-2 rounded-full bg-indigo-100 dark:bg-indigo-800 text-indigo-600 dark:text-indigo-200 transition-colors duration-200 hover:bg-indigo-200 dark:hover:bg-indigo-700"
+              >
+                {darkMode ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
+              </button>
+            </div>
           </div>
           <p className="mt-2 text-xl text-gray-600 dark:text-gray-300">
             Upload your resume, specify the role, and get instant analysis
@@ -85,7 +106,7 @@ function App() {
               </button>
             </div>
           </div>
-          <PDFTextExtractor onTextExtract={handleTextExtraction} />
+          <PDFTextExtractor onTextExtract={handleTextExtraction} onReset={handleReset} ref={pdfTextExtractorRef} />
         </div>
 
         <ResponseDisplay response={response} candidateName={username} />

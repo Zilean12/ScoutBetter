@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import pdfToText from "react-pdftotext";
 import { Upload } from 'lucide-react';
+import { Card } from "./UI/Card";
 
 function PDFTextExtractor({ onTextExtract }) {
-  const [texts, setTexts] = useState("");
   const [feedback, setFeedback] = useState("");
   const MAX_FILE_SIZE_MB = 5;
 
@@ -11,7 +11,7 @@ function PDFTextExtractor({ onTextExtract }) {
     pdfToText(file)
       .then((extractedText) => {
         const formattedText = `[resume ${index + 1}]\n${extractedText}\n[end of resume ${index + 1}]`;
-        setTexts((prevTexts) => prevTexts + "\n" + formattedText);
+        console.log(formattedText); // Log the extracted text to the console
         setFeedback("Text extracted successfully!");
         onTextExtract(formattedText);
       })
@@ -57,7 +57,7 @@ function PDFTextExtractor({ onTextExtract }) {
   };
 
   return (
-    <div className="w-full">
+    <Card className="w-full p-6">
       <div
         className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center cursor-pointer transition-all duration-200 hover:border-indigo-500 dark:hover:border-indigo-400"
         onDragOver={(e) => e.preventDefault()}
@@ -86,7 +86,7 @@ function PDFTextExtractor({ onTextExtract }) {
       </div>
 
       {feedback && (
-        <p
+        <div
           className={`mt-4 p-3 rounded-md ${
             feedback.includes("successfully")
               ? "bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100"
@@ -94,23 +94,10 @@ function PDFTextExtractor({ onTextExtract }) {
           }`}
         >
           {feedback}
-        </p>
-      )}
-
-      {texts && (
-        <div className="mt-6">
-          <h4 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">Extracted Text:</h4>
-          <textarea
-            value={texts}
-            readOnly
-            rows="6"
-            className="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-700 shadow-sm resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
-          />
         </div>
       )}
-    </div>
+    </Card>
   );
 }
 
 export default PDFTextExtractor;
-
