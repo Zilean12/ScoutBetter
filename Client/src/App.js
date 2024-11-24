@@ -770,7 +770,7 @@ function App() {
 
   return (
     <div className="App bg-gradient-to-r from-purple-100 to-pink-100 dark:from-gray-800 dark:to-gray-900 min-h-screen flex items-center justify-center pt-12 pb-12 transition-colors duration-300">
-      <div className="container mx-auto p-12 bg-white dark:bg-gray-800 shadow-xl rounded-xl max-w-6xl">
+      <div className="container mx-auto p-12 bg-white dark:bg-gray-800 shadow-xl rounded-xl max-w-5xl">
         <header className="App-header text-center mb-8">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-4xl font-bold text-indigo-700 dark:text-indigo-300">Resume Analysis</h1>
