@@ -1,5 +1,6 @@
 <h2>Resume Analyzer </h2>
 A smart resume analyzer for job seekers and recruiters.
+
 ## 🚀 Quick Start
 
 Visit [https://resume-analyzer123.netlify.app/](https://resume-analyzer123.netlify.app/) to use Resume Analyzer online.
